@@ -61,7 +61,7 @@ input[type="color"]::-webkit-color-swatch {
   margin-bottom: 5px;
 }
 
-.picker {
+.tool {
   display: inline-block;
   border: 1px;
   border-color: transparent;
@@ -72,9 +72,16 @@ input[type="color"]::-webkit-color-swatch {
   height: 20px;
   margin-bottom: 5px;
   vertical-align: top;
-  background-image: url('palette.png');
   background-size: 20px; /* Cover the entire area */
   background-position: center; /* Center the image within the div */
+}
+
+#picker{
+  background-image: url('palette.png');
+}
+
+#rubber{
+  background-image: url('rubber.png');
 }
 
 .colors button:nth-of-type(1) {
@@ -187,14 +194,6 @@ e
 
 .colors button:nth-of-type(28) {
   background-color: #ff99ff;
-}
-
-.colors button:nth-of-type(29) {
-  background-color: #e8c4e8;
-}
-
-.colors button:nth-of-type(30) {
-  background-color: #ffffff;
 }
 
 .brushes {

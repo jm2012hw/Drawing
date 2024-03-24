@@ -2,12 +2,12 @@ window.onload = function () {
 
   // Definitions
   var whiteboard = document.getElementById("whiteboard");
-  var context = whiteboard.getContext("2d");
+  var brush = whiteboard.getContext("2d");
 
 
   // Specifications
-  context.strokeStyle = 'black'; // initial brush color
-  context.lineWidth = 5; // initial brush width
+  brush.strokeStyle = 'black'; // initial brush color
+  brush.lineWidth = 5; // initial brush width
   var brushSlider = document.getElementById('slider');
 
 
@@ -15,27 +15,35 @@ window.onload = function () {
   var colors = document.getElementsByClassName('colors')[0];
 
   colors.addEventListener('click', function(event) {
-    var color = event.target.value || 'black'; // Get the selected color
-    context.strokeStyle = color; // Set the brush color
+    var color = event.target.value; // Get the selected color
+    brush.strokeStyle = color; // Set the brush color
     
     // Set the value of --SliderColor to the selected color
     brushSlider.style.setProperty('--SliderColor', color);
   });
   var colorPicker = document.getElementById('color-picker');
+  var rubber = document.getElementById('rubber');
 
   colorPicker.addEventListener('change', function(event) {
     var color = event.target.value || 'black'; // Get the selected color
-    context.strokeStyle = color; // Set the brush color
+    brush.strokeStyle = color; // Set the brush color
     
     // Set the value of --SliderColor to the selected color
     brushSlider.style.setProperty('--SliderColor', color);
   });
+
+  rubber.addEventListener('click', function(event) {
+    brush.strokeStyle = '#ffffff'; // Set the brush color
+    brushSlider.style.setProperty('--SliderColor', color);
+  });
+
+
   // Handle Brushes
 
 // Function to update thumb size and color
 brushSlider.oninput = function() {
   var brushSize = brushSlider.value / 10; // Convert slider value to brush size (assuming each step is 0.1)
-  context.lineWidth = brushSize;
+  brush.lineWidth = brushSize;
   brushSlider.style.setProperty('--sliderSize', brushSize + 5 + 'px');
 }
 
@@ -44,9 +52,9 @@ brushSlider.oninput = function() {
 function mousedown(event) {
   if (event.button === MAIN_MOUSE_BUTTON) {
     shouldDraw = true;
-    context.beginPath();
+    brush.beginPath();
     let elementRect = event.target.getBoundingClientRect();
-    context.moveTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
+    brush.moveTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
   }
 }
 function mouseup(event) {
@@ -57,8 +65,8 @@ function mouseup(event) {
 function mousemove(event) {
   if (shouldDraw) {
     let elementRect = event.target.getBoundingClientRect();
-    context.lineTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
-    context.stroke();
+    brush.lineTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
+    brush.stroke();
   }
 }
 whiteboard.addEventListener('mousedown', mousedown);
@@ -73,18 +81,18 @@ whiteboard.style.height = window.innerHeight;
   var clearButton = document.getElementById('clear');
 
   clearButton.addEventListener('click', function() {
-    context.clearRect(0, 0, whiteboard.width, whiteboard.height);
+    brush.clearRect(0, 0, whiteboard.width, whiteboard.height);
   });
 
   // Handle Save Button
   var saveButton = document.getElementById('save');
 
   saveButton.addEventListener('click', function() {
-    var imageName = prompt('Please enter image name');
+    var imageName = prompt('Save untitled as... ');
     var whiteboardDataURL = whiteboard.toDataURL();
-    var a = document.createElement('a');
-    a.href = whiteboardDataURL;
-    a.download = imageName || 'drawing';
-    a.click();
+    var anchor = document.createElement('a');
+    anchor.href = whiteboardDataURL;
+    anchor.download = imageName || 'untitled';
+    anchor.click();
   });
 };
