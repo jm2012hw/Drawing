@@ -1,17 +1,13 @@
 window.onload = function () {
 
   // Definitions
-  var canvas = document.getElementById("paint-canvas");
-  var context = canvas.getContext("2d");
-  var boundings = canvas.getBoundingClientRect();
+  var whiteboard = document.getElementById("whiteboard");
+  var context = whiteboard.getContext("2d");
 
 
   // Specifications
-  var mouseX = 0;
-  var mouseY = 0;
   context.strokeStyle = 'black'; // initial brush color
   context.lineWidth = 5; // initial brush width
-  var isDrawing = false;
   var brushSlider = document.getElementById('slider');
 
 
@@ -65,19 +61,19 @@ function mousemove(event) {
     context.stroke();
   }
 }
-canvas.addEventListener('mousedown', mousedown);
-canvas.addEventListener('mouseup', mouseup);
-canvas.addEventListener('mousemove', mousemove);
-canvas.width = window.innerHeight;
-canvas.height = window.innerHeight;
-canvas.style.width = window.innerHeight;
-canvas.style.height = window.innerHeight;
+whiteboard.addEventListener('mousedown', mousedown);
+whiteboard.addEventListener('mouseup', mouseup);
+whiteboard.addEventListener('mousemove', mousemove);
+whiteboard.width = window.innerHeight;
+whiteboard.height = window.innerHeight;
+whiteboard.style.width = window.innerHeight;
+whiteboard.style.height = window.innerHeight;
 
   // Handle Clear Button
   var clearButton = document.getElementById('clear');
 
   clearButton.addEventListener('click', function() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.clearRect(0, 0, whiteboard.width, whiteboard.height);
   });
 
   // Handle Save Button
@@ -85,9 +81,9 @@ canvas.style.height = window.innerHeight;
 
   saveButton.addEventListener('click', function() {
     var imageName = prompt('Please enter image name');
-    var canvasDataURL = canvas.toDataURL();
+    var whiteboardDataURL = whiteboard.toDataURL();
     var a = document.createElement('a');
-    a.href = canvasDataURL;
+    a.href = whiteboardDataURL;
     a.download = imageName || 'drawing';
     a.click();
   });

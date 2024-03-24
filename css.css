@@ -314,6 +314,6 @@ canvas {
   height: 100%;
 }
 
-#paint-canvas {
+#whiteboard {
   cursor:crosshair;
 }
